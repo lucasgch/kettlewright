@@ -1,7 +1,7 @@
 bleach
 click
 email-validator
-eventlet
+eventlet==0.38.0
 Flask
 Flask-Assets
 Flask-Login
@@ -14,7 +14,7 @@ flask_cors
 flask_htmx
 flask_babel
 pybabel-json
-gunicorn
+gunicorn==23.0.0
 itsdangerous
 Jinja2
 libsass
