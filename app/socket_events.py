@@ -4,10 +4,12 @@ import json
 from app.models import Party, User, Character
 from flask_login import current_user
 from flask_socketio import emit, join_room, leave_room
+from app.lib.socket_rate_limiter import rate_limited
 
 
 def register_socket_events(socketio):
     @socketio.on('connect')
+    @rate_limited("5/10seconds", "connect")
     def handle_connect():
         print('Client connected', file=sys.stderr)
         print(current_user.id, file=sys.stderr)
@@ -21,6 +23,7 @@ def register_socket_events(socketio):
             print(f' User disconnected but probably was not logged. Reason: {reason}')
 
     @socketio.on('register')
+    @rate_limited("5/10seconds", "register")
     def handle_register():
         join_user_parties()
         print(f'User {current_user.id} registered and joined their party rooms')
@@ -38,6 +41,7 @@ def register_socket_events(socketio):
             print(f'User {current_user.id} joined party room {party_room}')
 
     @socketio.on('roll_dice')
+    @rate_limited("2/2seconds", "roll_dice")
     def handle_roll_dice(data):
         try:
             print('Rolling dice', data)

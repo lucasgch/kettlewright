@@ -18,6 +18,7 @@ gunicorn
 itsdangerous
 Jinja2
 libsass
+limits
 python-dotenv
 python-slugify
 pytz
